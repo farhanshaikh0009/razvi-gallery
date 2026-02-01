@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razvi Gallery | Curated Collections</title>
+    <!-- Importing Google Fonts for a 'Sweet' and Trustworthy look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* Theme Colors: Light Blue for Trust & Sweet combination */
+            --primary-color: #4A90E2;      /* Trustworthy Blue */
+            --secondary-color: #A3D5FF;    /* Sweet Light Blue */
+            --accent-color: #50E3C2;       /* Soft Teal accent */
+            --bg-color: #F0F8FF;           /* AliceBlue Background */
+            --white: #FFFFFF;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --shadow-soft: 0 10px 30px rgba(74, 144, 226, 0.1);
+            --shadow-hover: 0 15px 40px rgba(74, 144, 226, 0.2);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            padding: 1rem 5%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span { color: var(--text-dark); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-cta {
+            background-color: var(--primary-color);
+            color: var(--white) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--secondary-color);
+            opacity: 0.4;
+            z-index: -1;
+            border-radius: 4px;
+        }
+
+        .hero p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- FILTERS --- */
+        .filters-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: var(--white);
+            border: 1px solid transparent;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: 500;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        /* --- GALLERY GRID --- */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Image Card Design */
+        .image-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /* For animation */
+            opacity: 1; 
+            transform: scale(1);
+        }
+
+        .image-card.hidden {
+            display: none;
+        }
+
+        /* Animation class for filtering */
+        .image-card.fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 250px; /* Fixed height for consistency */
+            overflow: hidden;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-card:hover .img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* Overlay icon on hover */
+        .overlay-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.8);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-color);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .image-card:hover .overlay-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: auto; /* Pushes everything above it up */
+            padding-top: 1rem;
+        }
+
+        /* DOWNLOAD BUTTON - Bottom of Image/Card */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .download-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--white);
+            padding: 3rem 5%;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* Simplified mobile nav for this demo */
+            .logo { flex-grow: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fa-solid fa-layer-group"></i>
+                Razvi<span>Gallery</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">Trending</a></li>
+                <li><a href="#">Artists</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <a href="#" class="nav-cta">Submit Art</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Discover the Art of <br><span>Sweet Simplicity</span></h1>
+            <p>Explore our curated collections of high-quality images. <br>Filtered by experts, ready for you.</p>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-container">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fa-solid fa-border-all"></i> All
+            </button>
+            <button class="filter-btn" data-filter="nature">
+                <i class="fa-solid fa-leaf"></i> Nature
+            </button>
+            <button class="filter-btn" data-filter="architecture">
+                <i class="fa-solid fa-building"></i> Architecture
+            </button>
+            <button class="filter-btn" data-filter="abstract">
+                <i class="fa-solid fa-shapes"></i> Abstract
+            </button>
+            <button class="filter-btn" data-filter="people">
+                <i class="fa-solid fa-users"></i> People
+            </button>
+        </section>
+
+        <!-- Gallery Grid Section -->
+        <section class="gallery-section">
+            <div class="gallery-grid" id="galleryGrid">
+
+                <!-- Image Card 1: Nature -->
+                <article class="image-card" data-category="nature">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/nature1/600/500" alt="Serene Lake">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Nature</span>
+                        <h3 class="card-title">Serene Lake Morning</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> Alex Doe</span>
+                            <span><i class="fa-solid fa-image"></i> JPG</span>
+                        </div>
+                        <!-- Bottom Download Button -->
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Image Card 2: Architecture -->
+                <article class="image-card" data-category="architecture">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/arch1/600/500" alt="Modern Building">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Architecture</span>
+                        <h3 class="card-title">Urban Blue Glass</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> Sarah Smith</span>
+                            <span><i class="fa-solid fa-image"></i> PNG</span>
+                        </div>
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Image Card 3: Abstract -->
+                <article class="image-card" data-category="abstract">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/abs1/600/500" alt="Blue Fluid">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Abstract</span>
+                        <h3 class="card-title">Fluid Dreams</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> Razvi Art</span>
+                            <span><i class="fa-solid fa-image"></i> JPG</span>
+                        </div>
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Image Card 4: People -->
+                <article class="image-card" data-category="people">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/people1/600/500" alt="Happy Portrait">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">People</span>
+                        <h3 class="card-title">Joyful Portrait</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> Mike Lens</span>
+                            <span><i class="fa-solid fa-image"></i> JPG</span>
+                        </div>
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Image Card 5: Nature -->
+                <article class="image-card" data-category="nature">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/nature2/600/500" alt="Forest Light">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Nature</span>
+                        <h3 class="card-title">Forest Sunlight</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> Emily Green</span>
+                            <span><i class="fa-solid fa-image"></i> JPG</span>
+                        </div>
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Image Card 6: Architecture -->
+                <article class="image-card" data-category="architecture">
+                    <div class="img-wrapper">
+                        <img src="https://picsum.photos/seed/arch2/600/500" alt="White Structure">
+                        <div class="overlay-icon"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Architecture</span>
+                        <h3 class="card-title">Minimalist Structure</h3>
+                        <div class="card-meta">
+                            <span><i class="fa-solid fa-user"></i> John Build</span>
+                            <span><i class="fa-solid fa-image"></i> PNG</span>
+                        </div>
+                        <button class="download-btn">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <a href="#" class="logo" style="margin-bottom: 1rem; display:inline-block;">
+                    <i class="fa-solid fa-layer-group"></i> Razvi<span>Gallery</span>
+                </a>
+                <p style="color: var(--text-light); font-size: 0.9rem;">
+                    Your trusted source for high-quality, curated images. Designed for creators.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Collections</a></li>
+                    <li><a href="#">Trending</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">License</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Razvi Gallery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Filtering Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const imageCards = document.querySelectorAll('.image-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 2. Add active class to clicked button
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // 3. Filter images
+                    imageCards.forEach(card => {
+                        // Reset animation
+                        card.classList.remove('fade-in');
+                        void card.offsetWidth; // Trigger reflow
+
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.classList.remove('hidden');
+                            card.classList.add('fade-in');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Optional: Simple interaction for Download buttons
+            const downloadBtns = document.querySelectorAll('.download-btn');
+            downloadBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = `<i class="fa-solid fa-check"></i> Downloaded`;
+                    this.style.backgroundColor = 'var(--accent-color)';
+                    this.style.color = '#fff';
+                    this.style.borderColor = 'var(--accent-color)';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                        this.style.borderColor = '';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
